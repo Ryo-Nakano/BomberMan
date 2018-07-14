@@ -7,19 +7,25 @@ using UniRx.Triggers;
 public class PlayerController : MonoBehaviour {
 
 	[SerializeField] float speed;
+	[SerializeField] GameObject manager;
+	ManagerScript ms;
 
-	// Use this for initialization
+	private void Awake()
+	{
+		ms = manager.GetComponent<ManagerScript>();
+	}
+
 	void Start () {
-		PlayerMove1();
+		PlayerMove1();//Playerの移動実装①
 
 		this.OnTriggerEnterAsObservable()
 		    .Where(col => col.gameObject.tag == "Gem")//当たった相手のtagが"Gem"だった時だけプッシュ
 		    //.First()//これついてると1個Gemと接触したら他のGemの時反応しなくなっちゃう！→インスタンス化は4つされているはずだけど、ストリームは1つしかできてない？
-		    .Subscribe(x => { 
+		    .Subscribe(x => { //購読(xに当たった相手の情報が入っている)
 			    Debug.Log("Gem!!!");
 			    Destroy(x.gameObject);//当たったGemをDestroy
-                //ポイント加算のコード書く
-		});//購読
+			    ms.score ++;//score加算
+		});
 
 	}
 

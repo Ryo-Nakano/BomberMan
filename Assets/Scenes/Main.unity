@@ -350,6 +350,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 5
+  manager: {fileID: 1995103361}
 --- !u!54 &1064596805
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -711,6 +712,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ce255fbb038a425285822d9b4be8776, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  scoreText: {fileID: 0}
+  score: 0
 --- !u!4 &1995103363
 Transform:
   m_ObjectHideFlags: 0
