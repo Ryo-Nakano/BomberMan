@@ -55,7 +55,7 @@ public class PlayerController : MonoBehaviour {
             .Subscribe(_ => BaseMove("down"));
 
         //4本ストリーム作っちゃうのってどうなのかしら。
-        //なんとかすおtリーム1本で、条件分岐できないものか...
+        //なんとかストリーム1本で、条件分岐できないものか...
 	}
 
 	//Playerの移動実装①
