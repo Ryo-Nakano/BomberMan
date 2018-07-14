@@ -12,50 +12,39 @@ public class PlayerController : MonoBehaviour {
 	void Start () {
 		PlayerMove1();
 
-        /*
-		this.UpdateAsObservable()
-		    .Where(_ => {
-			string direction;
-			if(Input.GetKey("right"))
-			{
-				direction = "right";
-			}
-			else if(Input.GetKey("left"))
-			{
-				direction = "left";
-			}
-			else if(Input.GetKey("up"))
-			{
-				direction = "up";
-			}
-		})
-
-        Whereの中を条件分岐して、そのWhereから流し込まれる値に応じてSubscribe内で呼ぶ部分変えられたらいいなと思ったんだけど、ちょっと無理そう。
-		*/
+		this.OnTriggerEnterAsObservable()
+		    .Where(col => col.gameObject.tag == "Gem")//当たった相手のtagが"Gem"だった時だけプッシュ
+		    //.First()//これついてると1個Gemと接触したら他のGemの時反応しなくなっちゃう！→インスタンス化は4つされているはずだけど、ストリームは1つしかできてない？
+		    .Subscribe(x => { 
+			    Debug.Log("Gem!!!");
+			    Destroy(x.gameObject);//当たったGemをDestroy
+                //ポイント加算のコード書く
+		});//購読
 
 	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+
 
     //Playerの移動実装①
 	void PlayerMove1()
 	{
 		this.UpdateAsObservable()//Update中ずっと値流し込み
-            .Where(_ => Input.GetKey("right"))
-            .Subscribe(_ => BaseMove("right"));
+		    .TakeUntilDestroy(this)//Destroyされたら自動で登録解除(onCompleted通知も飛ぶ)
+            .Where(_ => Input.GetKey("right"))//右押した時だけプッシュ
+            .Subscribe(_ => BaseMove("right"));//購読
+		//『this.』で書いてるから、ぶっちゃけこの場面では登録解除のコードはいらないかな！(インスタンス破棄と同時に登録先(自分自身)も消されるから)
 
         this.UpdateAsObservable()//Update中ずっと値流し込み
+		    .TakeUntilDestroy(this)
             .Where(_ => Input.GetKey("left"))
             .Subscribe(_ => BaseMove("left"));
 
         this.UpdateAsObservable()//Update中ずっと値流し込み
+		    .TakeUntilDestroy(this)
             .Where(_ => Input.GetKey("up"))
             .Subscribe(_ => BaseMove("up"));
 
         this.UpdateAsObservable()//Update中ずっと値流し込み
+		    .TakeUntilDestroy(this)
             .Where(_ => Input.GetKey("down"))
             .Subscribe(_ => BaseMove("down"));
 
@@ -66,7 +55,26 @@ public class PlayerController : MonoBehaviour {
 	//Playerの移動実装①
 	void PlayerMove2()
 	{
-		
+		/*
+        this.UpdateAsObservable()
+            .Where(_ => {
+            string direction;
+            if(Input.GetKey("right"))
+            {
+                direction = "right";
+            }
+            else if(Input.GetKey("left"))
+            {
+                direction = "left";
+            }
+            else if(Input.GetKey("up"))
+            {
+                direction = "up";
+            }
+        })
+
+        Whereの中を条件分岐して、そのWhereから流し込まれる値に応じてSubscribe内で呼ぶ部分変えられたらいいなと思ったんだけど、ちょっと無理そう。
+        */
 	}
 
     //Playerの移動を司る関数
