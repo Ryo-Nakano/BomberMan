@@ -7,6 +7,8 @@ using System;
 
 public class BombScript : MonoBehaviour {
 
+	[SerializeField] GameObject blast;//爆風のPrefab
+
 	SphereCollider sc;
 
 	[SerializeField] int bombTimer;//Bombが爆発するまでの時間
@@ -25,9 +27,18 @@ public class BombScript : MonoBehaviour {
 				  .TakeUntilDestroy(this)//自身がDestroyされるまで
 				  .Subscribe(_ =>
 				  {
-					  Debug.Log("Bomb!!!!!!!!!!!!");
                       Destroy(this.gameObject);
 				  });
+
+        //BombがDestroyされたら呼ばれる処理
+		this.UpdateAsObservable()
+			.TakeUntilDestroy(this)
+			.Subscribe(_ => { },
+					   () =>
+					   {
+						    Debug.Log("Bomb Destroy Completed!!!!!");
+			                //Instantiate(blast);
+					   });
 	}
 
 
