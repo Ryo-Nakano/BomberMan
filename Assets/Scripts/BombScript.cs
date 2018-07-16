@@ -37,7 +37,7 @@ public class BombScript : MonoBehaviour {
 					   () =>
 					   {
 						    Debug.Log("Bomb Destroy Completed!!!!!");
-			                //Instantiate(blast);
+			                Instantiate(blast, this.transform.position, Quaternion.identity);
 					   });
 	}
 

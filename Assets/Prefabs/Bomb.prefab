@@ -96,6 +96,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52a375148eb0540649dc815022b5caab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  blast: {fileID: 1963755058980722, guid: 703d01a57b6c6410a8130224145da11b, type: 2}
   bombTimer: 3
 --- !u!135 &135951229972726842
 SphereCollider:
