@@ -9,11 +9,11 @@ public class PlayerController : MonoBehaviour {
 	[SerializeField] float speed;
 	[SerializeField] GameObject manager;
 	[SerializeField] GameObject bomb;
-	ManagerScript ms;
+	//ManagerScript ms;
 
 	private void Awake()
 	{
-		ms = manager.GetComponent<ManagerScript>();
+		//ms = manager.GetComponent<ManagerScript>();
 	}
 
 	void Start () {
@@ -81,10 +81,10 @@ public class PlayerController : MonoBehaviour {
 		this.UpdateAsObservable()//Update中ずっと値流し込み
             .TakeUntilDestroy(this)
             .Where(_ => Input.GetKeyDown("space"))
-		    .Subscribe(_ => { 
-			    Debug.Log("Pushed Space!!");
+		    .Subscribe(_ => 
+		    { 
 			    Instantiate(bomb, this.transform.position, Quaternion.identity);
-		});
+		    });
 	}
 
     //Playerの移動を司る関数
