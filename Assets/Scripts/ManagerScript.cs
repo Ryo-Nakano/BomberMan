@@ -9,6 +9,7 @@ public class ManagerScript : MonoBehaviour {
 
 	[SerializeField] Text scoreText;
 	[SerializeField] GameObject block;
+	[SerializeField] GameObject blocks;//生成されたBlockの親になる為のGameObject
 
 	public int score;//スコア計測用の変数
 
@@ -31,7 +32,8 @@ public class ManagerScript : MonoBehaviour {
 			for (float x = 7.5f; x > -10; x -= 2.5f)
 			{
 				var instantiatePos = new Vector3(x, 0.5f, z);
-				Instantiate(block, instantiatePos, Quaternion.identity);
+				GameObject _obj =  Instantiate(block, instantiatePos, Quaternion.identity) as GameObject;
+				_obj.transform.parent = blocks.transform;//Blockの親をBlocksに指定
 			}
 		}
 	}
