@@ -21,24 +21,8 @@ public class BombScript : MonoBehaviour {
 	void Start () 
 	{
 		ControllIsTrigger();//isTriggerの制御する関数
-
-        //一定時間後、bomb爆発
-		Observable.Timer(TimeSpan.FromSeconds(bombTimer))
-				  .TakeUntilDestroy(this)//自身がDestroyされるまで
-				  .Subscribe(_ =>
-				  {
-                      Destroy(this.gameObject);
-				  });
-
-        //BombがDestroyされたら呼ばれる処理
-		this.UpdateAsObservable()
-			.TakeUntilDestroy(this)
-			.Subscribe(_ => { },
-					   () =>
-					   {
-						    Debug.Log("Bomb Destroy Completed!!!!!");
-			                Instantiate(blast, this.transform.position, Quaternion.identity);
-					   });
+		BombController();//Bombの振る舞いを規定する関数
+        
 	}
 
 
@@ -53,6 +37,28 @@ public class BombScript : MonoBehaviour {
             .Subscribe(_ => { //購読
                 sc.isTrigger = false;//あたり判定有効に
             });
+	}
+
+	//Bombの振る舞いを規定する関数
+	void BombController()
+	{
+		//一定時間後、bomb爆発
+        Observable.Timer(TimeSpan.FromSeconds(bombTimer))
+                  .TakeUntilDestroy(this)//自身がDestroyされるまで
+                  .Subscribe(_ =>
+                  {
+                      Destroy(this.gameObject);
+                  });
+
+        //BombがDestroyされたら呼ばれる処理
+        this.UpdateAsObservable()
+            .TakeUntilDestroy(this)
+            .Subscribe(_ => { },
+                       () =>
+                       {
+                           Debug.Log("Bomb Destroy Completed!!!!!");
+                           Instantiate(blast, this.transform.position, Quaternion.identity);
+                       });
 	}
 	
 
