@@ -436,7 +436,7 @@ GameObject:
   - component: {fileID: 1064596805}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -521,6 +521,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 5
   manager: {fileID: 1995103361}
+  bomb: {fileID: 1711283147925724, guid: fa377ff2d5cbb4e969782d0de8c1d0f5, type: 2}
 --- !u!54 &1064596805
 Rigidbody:
   m_ObjectHideFlags: 0

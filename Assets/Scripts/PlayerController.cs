@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour {
 
 	[SerializeField] float speed;
 	[SerializeField] GameObject manager;
+	[SerializeField] GameObject bomb;
 	ManagerScript ms;
 
 	private void Awake()
@@ -17,16 +18,7 @@ public class PlayerController : MonoBehaviour {
 
 	void Start () {
 		PlayerMove1();//Playerの移動実装①
-
-		this.OnTriggerEnterAsObservable()
-		    .Where(col => col.gameObject.tag == "Gem")//当たった相手のtagが"Gem"だった時だけプッシュ
-		    //.First()//これついてると1個Gemと接触したら他のGemの時反応しなくなっちゃう！→インスタンス化は4つされているはずだけど、ストリームは1つしかできてない？
-		    .Subscribe(x => { //購読(xに当たった相手の情報が入っている)
-			    Debug.Log("Gem!!!");
-			    Destroy(x.gameObject);//当たったGemをDestroy
-			    ms.score ++;//score加算
-		});
-
+		PutBomb();//Bombを置く関数
 	}
 
 
@@ -81,6 +73,18 @@ public class PlayerController : MonoBehaviour {
 
         Whereの中を条件分岐して、そのWhereから流し込まれる値に応じてSubscribe内で呼ぶ部分変えられたらいいなと思ったんだけど、ちょっと無理そう。
         */
+	}
+
+    //spaceキー押して爆弾押す関数
+	void PutBomb()
+	{
+		this.UpdateAsObservable()//Update中ずっと値流し込み
+            .TakeUntilDestroy(this)
+            .Where(_ => Input.GetKeyDown("space"))
+		    .Subscribe(_ => { 
+			    Debug.Log("Pushed Space!!");
+			    Instantiate(bomb, this.transform.position, Quaternion.identity);
+		});
 	}
 
     //Playerの移動を司る関数

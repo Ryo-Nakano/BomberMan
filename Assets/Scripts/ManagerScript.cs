@@ -17,9 +17,10 @@ public class ManagerScript : MonoBehaviour {
 		BlockGenerator();
 
 		this.ObserveEveryValueChanged(_ => score)//変数scoreの値が変化する度にプッシュ
-		    .Subscribe(s => {//sに受け取った値が入ってる
-			Debug.Log("Score : " + s);
-		});//
+		    .Subscribe(s => 
+		    {//sに受け取った値が入ってる
+			    Debug.Log("Score : " + s);
+		    });//
 	}
 
     //Stage上のBlockを生成する関数
